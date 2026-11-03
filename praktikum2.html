@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikum 2 Counter</title>
+</head>
+<body>
+    <style>
+        body { 
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;        
+        }
+        #angka {
+            font-size: 64px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 5px;
+        }
+    </style>
+<body>
+    <h2>Counter</h2>
+    <div id="angka">0</div>
+    <button id="tambah">+ Tambah</button>
+    <button id="kurang">- Kurang</button>
+    <button id="reset">Reset</button>
+
+    <script>
+        let hitung = 0;
+        const angka = document.getElementById('angka');
+
+        function cekAngka() {
+            if (hitung > 0) {
+                 angka.style.color = 'green';
+            } else if (hitung < 0) {
+                angka.style.color = 'red';
+            } else {
+                angka.syle.color = 'black';
+            }
+        }
+        document.getElementById('tambah').addEventListener('click', () => {
+            hitung = hitung + 1;
+            angka.textContent = hitung;
+            cekAngka()
+        });
+        document.getElementById('kurang').addEventListener('click', () => {
+            hitung = hitung - 1;
+            angka.textContent = hitung;
+            cekAngka();
+        });
+        document.getElementById('reset').addEventListener('click', () => {
+            hitung = 0;
+            angka.textContent = hitung;
+            angka.style.color = 'black';
+            cekAngka()
+        });
+        </script>
+</body>
+</html>
+
