@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Belanja</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        li button {
+            margin-left: 6px;
+        }
+
+        .qty {
+            display: inline-block;
+            min-width: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Daftar Belanja</h2>
+    <input type="text" id="barang" placeholder="Nama barang">
+    <button id="btnKlik">Tambah</button>
+    <p>Jumlah barang: <span id="jumlah">0</span></p>
+    <ul id="daftar"></ul>
+
+    <script>
+        const barang = document.getElementById('barang');
+        const btnKlik = document.getElementById('btnKlik');
+        const jumlah = document.getElementById('jumlah');
+        const daftar = document.getElementById('daftar');
+
+        function updateJumlah() {
+            let total = 0;
+            daftar.querySelectorAll('.qty').forEach(q => {
+                total += Number(q.textContent);
+            });
+            jumlah.textContent = total;
+        }
+
+        function tambahBarang() {
+            const nama = barang.value.trim();
+            if (nama === '') {
+                alert('Isi nama barang dulu ya!');
+                return;
+            }
+
+            const li = document.createElement('li');
+
+            const teks = document.createElement('span');
+            teks.textContent = nama + ' ';
+
+            const btnKurang = document.createElement('button');
+            btnKurang.textContent = '−';
+
+            const qty = document.createElement('span');
+            qty.className = 'qty';
+            qty.textContent = '1';
+
+            const btnPlus = document.createElement('button');
+            btnPlus.textContent = '+';
+
+            const btnHapus = document.createElement('button');
+            btnHapus.textContent = 'Hapus';
+
+            btnPlus.addEventListener('click', () => {
+                qty.textContent = Number(qty.textContent) + 1;
+                updateJumlah();
+            });
+
+            btnKurang.addEventListener('click', () => {
+                const sekarang = Number(qty.textContent);
+                if (sekarang > 1) {
+                    qty.textContent = sekarang - 1;
+                    updateJumlah();
+                }
+            });
+
+            btnHapus.addEventListener('click', () => {
+                qty.textContent = '0';
+                li.remove();
+                updateJumlah();
+            });
+
+            li.append(teks, btnKurang, qty, btnPlus, btnHapus);
+            daftar.appendChild(li);
+
+            barang.value = '';
+            barang.focus();
+            updateJumlah();
+        }
+
+        btnKlik.addEventListener('click', tambahBarang);
+        barang.addEventListener('keydown', e => {
+            if (e.key === 'Enter') tambahBarang();
+        });
+
+        updateJumlah();
+    </script>
+</body>
+
+</html>
